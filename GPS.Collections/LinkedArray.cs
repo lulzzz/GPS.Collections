@@ -8,15 +8,15 @@ namespace GPS.Collections
     {
         private ArrayLink<T> _root = null;
 
-        private int _size = 0;
+        private int _size => _root.Size;
 
-        public int Lowest { get; private set; } = 0;
+        public int Lowest=>_root.Lowest;
 
-        public int Highest => _size - Lowest;
+        public int Highest => _root.Highest;
 
         public LinkedArray()
         {
-            _root = new ArrayLink<T>(0, 1000);
+            _root = new ArrayLink<T>(0, 1024);
         }
 
         public LinkedArray(int index, T value) : this()
@@ -31,14 +31,14 @@ namespace GPS.Collections
 
         public LinkedArray(ICollection<T> collection)
         {
-            _root = new ArrayLink<T>(0, Math.Max(collection.Count, 1000));
+            _root = new ArrayLink<T>(0, Math.Max(collection.Count, 1024));
 
             AddRange(collection);
         }
 
         public void AddRange(ICollection<T> collection)
         {
-            AddRangeAt(_size, collection);
+            AddRangeAt(Highest, collection);
         }
 
         public void AddRangeAt(int index, ICollection<T> collection)
@@ -57,8 +57,6 @@ namespace GPS.Collections
                     this[index++] = item;
                 }
             }
-
-            _size += collection.Count;
         }
         public T this[int index]
         {
@@ -66,9 +64,6 @@ namespace GPS.Collections
             set
             {
                 _root[index] = value;
-
-                if (index < Lowest) Lowest = index;
-                if (index > _size) _size = index + 1;
             }
         }
 
@@ -84,7 +79,7 @@ namespace GPS.Collections
         public void Clear()
         {
             _root.Dispose();
-            _root = new ArrayLink<T>(0, 1000);
+            _root = new ArrayLink<T>(0, 1024);
         }
 
         public bool Contains(T item)
