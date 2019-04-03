@@ -1,3 +1,20 @@
+/*
+    # GPS.Collections
+    
+    ## ArrayLink.cs
+
+    Data structure that contains an array of `T`
+    given an initial size and lower bound equating
+    to index zero of the backing array.
+
+    ## Copyright
+
+    2019 - Gateway Programming School, Inc.
+    
+    This notice must be retained for any use the code
+    herein in whole or in part for any use.
+ */
+
 using System;
 
 namespace GPS.Collections

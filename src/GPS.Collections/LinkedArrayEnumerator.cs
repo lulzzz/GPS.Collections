@@ -1,9 +1,25 @@
+/*
+    # GPS.Collections
+    
+    ## LinkedArrayEnumerator.cs
+
+    Iterates over the LinkedArray data structure.
+
+    ## Copyright
+
+    2019 - Gateway Programming School, Inc.
+    
+    This notice must be retained for any use the code
+    herein in whole or in part for any use.
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace GPS.Collections
 {
-    public class LinkedArrayEnumerator<T> : IEnumerator<T>
+    public class LinkedArrayEnumerator<T> : IEnumerator<T>, IDisposable
     {
         private int _index = int.MinValue;
         private LinkedArray<T> _values = null;

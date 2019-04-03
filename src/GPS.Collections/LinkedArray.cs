@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+    # GPS.Collections
+    
+    ## LinkedArray.cs
+
+    Data structure that comprises an implementation of 
+    ICollection<T> that is backed by the ArrayLink object.
+
+    ## Copyright
+
+    2019 - Gateway Programming School, Inc.
+    
+    This notice must be retained for any use the code
+    herein in whole or in part for any use.
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
