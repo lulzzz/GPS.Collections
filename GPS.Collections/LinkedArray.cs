@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace GPS.Collections
 {
-    public sealed class LinkedArray<T> : ICollection<T>, IList<T>, IDisposable
+    public sealed partial class LinkedArray<T> : ICollection<T>, IList<T>, IDisposable
     {
         private ArrayLink<T> _root = null;
 
         private int _size => _root.Size;
 
-        public int Lowest=>_root.Lowest;
+        public int Lowest => _root.Lowest;
 
         public int Highest => _root.Highest;
 
@@ -84,70 +84,28 @@ namespace GPS.Collections
 
         public bool Contains(T item)
         {
-            return IndexOf(item) > int.MinValue;
+            return IndexOf(item) >= Lowest;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array.Length - arrayIndex < _size)
-                throw new ArgumentOutOfRangeException(nameof(array));
-
-            for (int i = Lowest; i < _size; ++i)
-            {
-                array[arrayIndex + Math.Abs(i) - Math.Abs(Lowest)] = _root[i];
-            }
+            throw new NotImplementedException(
+                "Cannot preserve spatial integrity");
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new LinkedArrayEnumerator(this);
-        }
-
-        public class LinkedArrayEnumerator : IEnumerator<T>
-        {
-            private int _index = int.MinValue;
-            private LinkedArray<T> _values = null;
-
-            public LinkedArrayEnumerator(LinkedArray<T> values)
-            {
-                _values = values;
-            }
-
-            public T Current =>
-                _index != int.MinValue
-                    ? _values[_index]
-                    : default(T);
-
-            object IEnumerator.Current => this.Current;
-
-            public void Dispose()
-            {
-                _values = null;
-            }
-
-            public bool MoveNext()
-            {
-                ++_index;
-
-                if (_index == _values.Highest + 1) return false;
-
-                return true;
-            }
-
-            public void Reset()
-            {
-                _index = int.MinValue;
-            }
+            return new LinkedArrayEnumerator<T>(this);
         }
 
         public int IndexOf(T item)
         {
-            for (int i = Lowest; i < _size; ++i)
+            for (int i = Lowest; i <= Highest; ++i)
             {
                 if (_root[i].Equals(item)) return i;
             }
 
-            return int.MinValue;
+            return _root.Lowest - 1;
         }
 
         public void Insert(int index, T item)

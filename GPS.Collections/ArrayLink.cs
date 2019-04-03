@@ -20,7 +20,7 @@ namespace GPS.Collections
                 var b = Math.Abs(Highest);
                 return (Lowest < 0 
                     ? (Highest > 0 ? b + a : a - b)
-                    : b - a) + 1;
+                    : b - a) + (_initialized ? 1 : 0);
             }
         }
 
@@ -42,6 +42,9 @@ namespace GPS.Collections
         {
             get
             {
+                if(!_initialized) 
+                    throw new IndexOutOfRangeException();
+                
                 if (key >= Start + Values.Length)
                 {
                     if (Higher != null) return Higher[key];
