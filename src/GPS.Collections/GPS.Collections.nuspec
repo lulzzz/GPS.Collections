@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>GPS.Collections</id>
+    <version>0.1.0</version>
+    <title>Library of sparse collections and tools.</title>
+    <authors>The Sharp Ninja</authors>
+    <owners>Gateway Programming School, Inc.</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://gatewayprogrammingschool.github.io/GPS.Collections/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/gatewayprogrammingschool/GPS.Collections/master/resources/GPS.Collections-logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Library of sparse collections and tools for working with them.</description>
+    <copyright>Copyright 2019 Gateway Programming School, Inc.</copyright>
+    <tags>GPS Collections Arrays</tags>
+  </metadata>
+</package>

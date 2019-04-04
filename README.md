@@ -4,6 +4,15 @@ Library of data structures for creating spacially oriented data.
 
 ## GPS.Collections.LinkedArray<T>
 
+### Installation
+
+__GPS.Collections__ is available through Nuget.
+
+```powershell
+
+nuget install GPS.Collections
+```
+
 ### Description of LinkedArray
 
 The `LinkedArray` is an auto-growing linked list of arrays that provide a contiguous indexing mechanism.  Indices may be any `Int32` value, both positive and negative.  This allows for natural indexing of data without sliding offsets.
