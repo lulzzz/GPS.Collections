@@ -24,9 +24,9 @@ namespace GPS.Collections.Tests
             var link = new ArrayLink<int>(0, data.size);
             link[data.index] = data.index;
                         
-            var count = (link.Lower?.Values.Length ?? 0) + 
-                link.Values.Length + 
-                (link.Higher?.Values.Length ?? 0);
+            var count = (link.Lower?.ArraySize ?? 0) + 
+                link.ArraySize + 
+                (link.Higher?.ArraySize ?? 0);
             
             Assert.Equal(data.size, link.Highest - link.Lowest + 1);
             Assert.Equal(data.index, link[data.index]);
@@ -45,9 +45,9 @@ namespace GPS.Collections.Tests
             var link = new ArrayLink<int>(0, 1024);
             foreach(var item in data.set) link[item] = item;
                         
-            var count = (link.Lower?.Values.Length ?? 0) + 
-                link.Values.Length + 
-                (link.Higher?.Values.Length ?? 0);
+            var count = (link.Lower?.ArraySize ?? 0) + 
+                link.ArraySize + 
+                (link.Higher?.ArraySize ?? 0);
 
             Assert.Equal(data.size, link.Size);
             Assert.Equal(data.set.Min(i => i), link[link.Lowest]);

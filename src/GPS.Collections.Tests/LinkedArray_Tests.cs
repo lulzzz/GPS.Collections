@@ -87,14 +87,15 @@ namespace GPS.Collections.Tests
 
             var list = new LinkedArray<int>();
             list.AddRange(data.set);
+            list.AddRange(data.set);
 
-            Assert.Equal(data.set.Length, (int)list.Count);
+            Assert.Equal(data.set.Length * 2, (int)list.Count);
             Assert.Equal(0, list.Lowest);
-            Assert.Equal(data.set.Length - 1, list.Highest);
+            Assert.Equal(data.set.Length * 2 - 1, list.Highest);
 
-            for (int i = 0; i < data.set.Length; ++i)
+            for (int i = 0; i < data.set.Length * 2; ++i)
             {
-                Assert.Equal(data.set[i], list[i]);
+                Assert.Equal(data.set[i % data.set.Length], list[i]);
             }
         }
 
