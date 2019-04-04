@@ -8,6 +8,7 @@ Library of data structures for creating spacially oriented data.
 
 1 - Sum of 20 Runs
 2 - Average of 20 Runs
+
 | Operation | 1 - ms	| 2 - ms |
 |-----------|---------|--------|
 | Loading ArrayList Total |51|2.55|
