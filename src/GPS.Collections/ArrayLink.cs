@@ -25,6 +25,7 @@ namespace GPS.Collections
     /// Data structure that represents a single node of a LinkedArray.
     /// </summary>
     /// <typeparam name="T">Type of data stored in the ArrayLink.</typeparam>
+    [Serializable]
     internal class ArrayLink<T> : IDisposable
     {
         /// <summary>
@@ -33,7 +34,7 @@ namespace GPS.Collections
         /// <remarks>
         /// Read-only.
         /// </remarks>
-        public static readonly decimal GrowthRate = 1.25m;
+        public static readonly decimal GrowthRate = 1.5m;
 
         /// <summary>
         /// Default size of an ArrayLink&lt;T&gt; instance.
@@ -90,7 +91,7 @@ namespace GPS.Collections
         /// Array of T containing the values of the ArrayLink&lt;T&gt; instance.
         /// </summary>
         /// <value>T[]</value>
-        public T[] Values { get; private set; }
+        public (bool set, T value)[] Values { get; private set; }
 
         /// <summary>
         /// Reference to the ArrayLink&lt;T&gt; representing the previous block
@@ -154,7 +155,7 @@ namespace GPS.Collections
         /// property.static  If the Higher property is null, a new ArrayLink&lt;T&gt; will
         /// be instantiated and assigned to the Higher property before sending the value.
         /// </remarks>
-        public T this[int key]
+        public (bool set, T value) this[int key]
         {
             get
             {
@@ -191,7 +192,7 @@ namespace GPS.Collections
 
                 // If the values have not been instantiated yet
                 // then return the default value.
-                if(Values == null) return default(T);
+                if(Values == null) return (set: false, value: default(T));
                 
                 return Values[index];
             }
@@ -258,7 +259,7 @@ namespace GPS.Collections
                 Highest = Math.Max(key, Highest);                 
 
                 // If Values is null, go ahead and instantiate it.
-                if(Values == null) Values = new T[ArraySize];
+                if(Values == null) Values = new (bool set, T value)[ArraySize];
                 Values[index] = value;
             }
         }

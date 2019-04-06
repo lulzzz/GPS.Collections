@@ -3,3 +3,10 @@ bin
 .vscode/solution-explorer
 *Template*
 *.nupkg
+src/GPS.Collections/Sorting/SparseSort.cs
+.gitignore
+_rels
+package
+.signature.p7s
+GatewayProgrammingSchool.xUnit.*
+src/GPS.Collections.Tests/Sorting/*Content_Types*.xml

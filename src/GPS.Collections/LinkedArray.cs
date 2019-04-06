@@ -26,6 +26,7 @@ namespace GPS.Collections
     /// instances holding the values of the collection.
     /// </summary>
     /// <typeparam name="T">Type of data held in the collection.</typeparam>
+    [Serializable]
     public sealed class LinkedArray<T> : ICollection<T>, IList<T>, IDisposable
     {
         /// <summary>
@@ -57,7 +58,7 @@ namespace GPS.Collections
         /// </remarks>
         public LinkedArray()
         {
-            _root = new ArrayLink<T>(0, 1024);
+            _root = new ArrayLink<T>(0, ArrayLink<T>.InitialSize);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace GPS.Collections
         /// <returns></returns>
         public LinkedArray(int index, T value) : this()
         {
-            _root[index] = value;
+            _root[index] = (set: true, value: value);
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace GPS.Collections
         /// <param name="collection">Values to initialize the collection.</param>
         public LinkedArray(ICollection<T> collection)
         {
-            _root = new ArrayLink<T>(0, Math.Max(collection.Count, 1024));
+            _root = new ArrayLink<T>(0, Math.Max(collection.Count, ArrayLink<T>.InitialSize));
 
             AddRange(collection);
         }
@@ -141,11 +142,21 @@ namespace GPS.Collections
         /// <value>Value of T</value>
         public T this[int index]
         {
-            get => _root[index];
+            get => _root[index].value;
             set
             {
-                _root[index] = value;
+                _root[index] = (set: true, value: value);
             }
+        }
+
+        /// <summary>
+        /// Determines if a value is set at an index.
+        /// </summary>
+        /// <param name="index">Index of value to analyze.</param>
+        /// <returns>True if value is set.</returns>
+        public bool IsSet(int index)
+        {
+            return _root[index].set;
         }
 
         /// <summary>
@@ -173,7 +184,7 @@ namespace GPS.Collections
         public void Clear()
         {
             _root.Dispose();
-            _root = new ArrayLink<T>(0, 1024);
+            _root = new ArrayLink<T>(0, ArrayLink<T>.InitialSize);
         }
 
         /// <summary>
@@ -216,7 +227,7 @@ namespace GPS.Collections
         {
             for (int i = Lowest; i <= Highest; ++i)
             {
-                if (_root[i].Equals(item)) return i;
+                if (_root[i].Equals((true, item))) return i;
             }
 
             return _root.Lowest - 1;

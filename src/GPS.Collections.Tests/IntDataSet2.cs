@@ -5,12 +5,14 @@ namespace GPS.Collections.Tests
 {
     public class IntDataSet2 : IEnumerable<object[]>
     {
-        private const int growth = (int)(1024 + 1024*1.25m);
-        private object[] _data = {
+        private static readonly int size = ArrayLink<object>.InitialSize;
+        private static readonly int growth = (int)(size + size * 1.25m);
+        private object[] _data =
+        {
                   (set: new [] { -1, -2, -3 }, size: 3, count: growth, higher: false, lower: true)
-                , (set: new [] { 0, 1, 2 }, size: 3, count: 1024, higher: false, lower: false)
-                , (set: new [] { 1023, 1024 }, size: 2, count: growth, higher: true, lower: false)
-                , (set: new [] { -1023, 1024 }, size: 2048, count: growth + (int)(1024*1.25m), higher: true, lower: true)
+                , (set: new [] { 0, 1, 2 }, size: 3, count: size, higher: false, lower: false)
+                , (set: new [] { size - 1, size }, size: 2, count: growth, higher: true, lower: false)
+                , (set: new [] { -(size - 1), size }, size: size * 2, count: growth + (int)(size*1.25m), higher: true, lower: true)
             };
 
         public IEnumerator<object[]> GetEnumerator()

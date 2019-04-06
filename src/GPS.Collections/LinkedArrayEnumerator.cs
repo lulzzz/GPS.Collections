@@ -23,6 +23,7 @@ namespace GPS.Collections
     /// Enumerator for <see cref="LinkedArray{T}" />.
     /// </summary>
     /// <typeparam name="T">Data type in the LinkedArray</typeparam>
+    [Serializable]
     public class LinkedArrayEnumerator<T> : IEnumerator<T>, IDisposable
     {
         private int _index = int.MinValue;
@@ -35,6 +36,7 @@ namespace GPS.Collections
         public LinkedArrayEnumerator(LinkedArray<T> values)
         {
             _values = values;
+            _index = values.Lowest - 1;
         }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace GPS.Collections
         /// <returns>True if move was successful.</returns>
         public bool MoveNext()
         {
-            ++_index;
+            while(_index <= _values.Highest && !_values.IsSet(++_index)) ;
 
             if (_index == _values.Highest + 1) return false;
 
@@ -78,7 +80,7 @@ namespace GPS.Collections
         /// </summary>
         public void Reset()
         {
-            _index = int.MinValue;
+            _index = _values.Lowest - 1;
         }
     }
 }
