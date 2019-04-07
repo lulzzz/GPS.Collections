@@ -2,40 +2,6 @@
 
 Library of data structures for creating spacially oriented data.
 
-## Benchmark
-
-[Benchmark Results](https://1drv.ms/x/s!At7D0T4Uz1vyiNpl3sgdCIADmRFAcA)
-
-1 - Sum of 20 Runs
-2 - Average of 20 Runs
-
-| Operation | 1 - ms	| 2 - ms |
-|-----------|---------|--------|
-| Loading ArrayList Total |51|2.55|
-| Loading LinkedArray Total | 59 | 2.95 |
-| Loading LinkedList Total | 43 | 2.15 |
-| Loading List Total | 1 | 0.05 |
-| Find Last ArrayList Total | 0 | 0 |
-| Find Last LinkedArray Total | 1 | 0.05 |
-| Find Last LinkedList Total | 1 | 0.05 |
-| Find Last List Total | 0 | 0 |
-| Clear LinkedArray Total | 0 | 0 |
-| Clear LinkedList Total | 5 | 0.25 |
-| Clear List Total | 0 | 0 |
-| Positive Random Set LinkedArray Total | 98 | 4.9 |
-| Positive Random Set List Total | 2469 | 123.45 |
-| Open Ended Random Set LinkedArray Total | 106 | 5.3 |
-
-__Notes:__
-
-* ArrayList does not have a Clear() method.
-* LinkedList and ArrayList do not support inserting data arbitrarily in position.
-* List, LinkedList and ArrayList do not support inserting data with open ended indices (Int32.MinValue … Int32.MaxValue).
-
-> _*Randomly adding data to the List required on average 24x longer to add new items.*_
-
-See test code at [LinkedArray_Tests.cs](https://github.com/gatewayprogrammingschool/GPS.Collections/blob/34e25069abe5f2978f7be9fa45fe3fbfe8dd8b9f/src/GPS.Collections.Tests/LinkedArray_Tests.cs#L152-L223)
-
 ## GPS.Collections.LinkedArray&lt;T&gt;
 
 ### Installation
