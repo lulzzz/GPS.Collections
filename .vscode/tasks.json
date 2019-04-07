@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet build",
+            "command": "dotnet build /nowarn:xUnit2017",
             "type": "shell",
             "group": "build",
             "presentation": {

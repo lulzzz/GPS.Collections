@@ -4,7 +4,7 @@
     ## LinkedArray.cs
 
     Data structure that comprises an implementation of 
-    ICollection<T> that is backed by the ArrayLink object.
+    ICollection<TValue> that is backed by the ArrayLink object.
 
     ## Copyright
 
@@ -21,18 +21,18 @@ using System.Collections.Generic;
 namespace GPS.Collections
 {
     /// <summary>
-    /// Collection of generic values T that 
-    /// uses a linked list of ArrayLink&lt;T&gt;
+    /// Collection of generic values TValue that 
+    /// uses a linked list of ArrayLink&lt;TValue&gt;
     /// instances holding the values of the collection.
     /// </summary>
-    /// <typeparam name="T">Type of data held in the collection.</typeparam>
+    /// <typeparam name="TValue">Type of data held in the collection.</typeparam>
     [Serializable]
-    public sealed class LinkedArray<T> : ICollection<T>, IList<T>, IDisposable
+    public sealed class LinkedArray<TValue> : ICollection<TValue>, IList<TValue>, IDisposable
     {
         /// <summary>
-        /// Root ArrayLink&lt;T&gt;
+        /// Root ArrayLink&lt;TValue&gt;
         /// </summary>
-        private ArrayLink<T> _root = null;
+        private ArrayLink<TValue> _root = null;
 
         /// <summary>
         /// Capacity of the Root
@@ -54,11 +54,11 @@ namespace GPS.Collections
         /// </summary>
         /// <remarks>
         /// Initializes the collection with a
-        /// root ArrayLink&lt;T&gt;.
+        /// root ArrayLink&lt;TValue&gt;.
         /// </remarks>
         public LinkedArray()
         {
-            _root = new ArrayLink<T>(0, ArrayLink<T>.InitialSize);
+            _root = new ArrayLink<TValue>(0, ArrayLink<TValue>.InitialSize);
         }
 
         /// <summary>
@@ -69,47 +69,47 @@ namespace GPS.Collections
         /// <param name="index">Key of the value being added.</param>
         /// <param name="value">Value to be added.</param>
         /// <returns></returns>
-        public LinkedArray(int index, T value) : this()
+        public LinkedArray(int index, TValue value) : this()
         {
             _root[index] = (set: true, value: value);
         }
 
         /// <summary>
-        /// Constructor that creates an ArrayLink&lt;T&gt; of
+        /// Constructor that creates an ArrayLink&lt;TValue&gt; of
         /// the requested size.
         /// </summary>
         /// <param name="initialSize">Requested size of the Collection.</param>
         public LinkedArray(int initialSize)
         {
-            _root = new ArrayLink<T>(0, initialSize);
+            _root = new ArrayLink<TValue>(0, initialSize);
         }
 
         /// <summary>
-        /// Constructor that accepts an ICollection&lt;T&gt; containing
+        /// Constructor that accepts an ICollection&lt;TValue&gt; containing
         /// values to initialize the collection starting at key = 0.
         /// </summary>
         /// <param name="collection">Values to initialize the collection.</param>
-        public LinkedArray(ICollection<T> collection)
+        public LinkedArray(ICollection<TValue> collection)
         {
-            _root = new ArrayLink<T>(0, Math.Max(collection.Count, ArrayLink<T>.InitialSize));
+            _root = new ArrayLink<TValue>(0, Math.Max(collection.Count, ArrayLink<TValue>.InitialSize));
 
             AddRange(collection);
         }
 
         /// <summary>
         /// Adds a range represented by an instance of
-        /// ICollection&lt;T&gt; to add to the collection
+        /// ICollection&lt;TValue&gt; to add to the collection
         /// at the current Highest + 1 index.
         /// </summary>
         /// <param name="collection">Values to add to the collection.</param>
-        public void AddRange(ICollection<T> collection)
+        public void AddRange(ICollection<TValue> collection)
         {
             AddRangeAt(_root.Initialized ? Highest + 1 : 0, collection);
         }
 
         /// <summary>
         /// Adds a range represented by an instance of
-        /// ICollection&lt;T&gt; to add to the collection
+        /// ICollection&lt;TValue&gt; to add to the collection
         /// at the specific relative index requested.
         /// </summary>
         /// <param name="index">Logical index to start adding the collection</param>
@@ -118,9 +118,9 @@ namespace GPS.Collections
         /// Existing values will be overwritten where the intersect with
         /// the indices of the inbound collection.
         /// </remarks>
-        public void AddRangeAt(int index, ICollection<T> collection)
+        public void AddRangeAt(int index, ICollection<TValue> collection)
         {
-            if (collection is IList<T> list)
+            if (collection is IList<TValue> list)
             {
                 for (int i = index; i < index + collection.Count; ++i)
                 {
@@ -139,8 +139,8 @@ namespace GPS.Collections
         /// <summary>
         /// Gets or Sets values in the collection.
         /// </summary>
-        /// <value>Value of T</value>
-        public T this[int index]
+        /// <value>Value of TValue</value>
+        public TValue this[int index]
         {
             get => _root[index].value;
             set
@@ -170,10 +170,10 @@ namespace GPS.Collections
         public bool IsReadOnly => false;
 
         /// <summary>
-        /// Adds a single value T at the end of the collection.
+        /// Adds a single value TValue at the end of the collection.
         /// </summary>
         /// <param name="item"></param>
-        public void Add(T item)
+        public void Add(TValue item)
         {
             AddRange(new[] { item });
         }
@@ -184,15 +184,15 @@ namespace GPS.Collections
         public void Clear()
         {
             _root.Dispose();
-            _root = new ArrayLink<T>(0, ArrayLink<T>.InitialSize);
+            _root = new ArrayLink<TValue>(0, ArrayLink<TValue>.InitialSize);
         }
 
         /// <summary>
         /// Indicates that the collection contains the specified value.
         /// </summary>
-        /// <param name="item">Value of T to search for.</param>
+        /// <param name="item">Value of TValue to search for.</param>
         /// <returns>True if the value is found, otherwise false.</returns>
-        public bool Contains(T item)
+        public bool Contains(TValue item)
         {
             return IndexOf(item) >= Lowest;
         }
@@ -202,19 +202,19 @@ namespace GPS.Collections
         /// </summary>
         /// <param name="array"></param>
         /// <param name="arrayIndex"></param>
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(TValue[] array, int arrayIndex)
         {
             throw new NotImplementedException(
                 "Cannot preserve spatial integrity");
         }
 
         /// <summary>
-        /// Returns the <see cref="LinkedArrayEnumerator{T}"/> for the collection.
+        /// Returns the <see cref="LinkedArrayEnumerator{TValue}"/> for the collection.
         /// </summary>
-        /// <returns>IEnumerator&lt;T&gt;</returns>
-        public IEnumerator<T> GetEnumerator()
+        /// <returns>IEnumerator&lt;TValue&gt;</returns>
+        public IEnumerator<TValue> GetEnumerator()
         {
-            return new LinkedArrayEnumerator<T>(this);
+            return new LinkedArrayEnumerator<TValue>(this);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace GPS.Collections
         /// <param name="item">Value to search for.</param>
         /// <returns>Logical index of the value.  Returns Lowest - 1 if the value
         /// is not found.</returns>
-        public int IndexOf(T item)
+        public int IndexOf(TValue item)
         {
             for (int i = Lowest; i <= Highest; ++i)
             {
@@ -238,10 +238,10 @@ namespace GPS.Collections
         /// </summary>
         /// <param name="index"></param>
         /// <param name="item"></param>
-        public void Insert(int index, T item)
+        public void Insert(int index, TValue item)
         {
             throw new InvalidOperationException(
-                "LinkedArray<T> cannot change indices of elements.");
+                "LinkedArray<TValue> cannot change indices of elements.");
         }
 
         /// <summary>
@@ -249,10 +249,10 @@ namespace GPS.Collections
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool Remove(T item)
+        public bool Remove(TValue item)
         {
             throw new InvalidOperationException(
-                "LinkedArray<T> cannot change indices of elements.");
+                "LinkedArray<TValue> cannot change indices of elements.");
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace GPS.Collections
         public void RemoveAt(int index)
         {
             throw new InvalidOperationException(
-                "LinkedArray<T> cannot change indices of elements.");
+                "LinkedArray<TValue> cannot change indices of elements.");
         }
 
         /// <summary>

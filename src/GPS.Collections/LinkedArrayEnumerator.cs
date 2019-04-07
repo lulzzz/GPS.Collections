@@ -20,33 +20,32 @@ using System.Collections.Generic;
 namespace GPS.Collections
 {
     /// <summary>
-    /// Enumerator for <see cref="LinkedArray{T}" />.
+    /// Enumerator for <see cref="LinkedArray{TValue}" />.
     /// </summary>
-    /// <typeparam name="T">Data type in the LinkedArray</typeparam>
+    /// <typeparam name="TValue">Data type in the LinkedArray</typeparam>
     [Serializable]
-    public class LinkedArrayEnumerator<T> : IEnumerator<T>, IDisposable
+    public class LinkedArrayEnumerator<TValue> : IEnumerator<TValue>, IDisposable
     {
         private int _index = int.MinValue;
-        private LinkedArray<T> _values = null;
+        private LinkedArray<TValue> _values = null;
 
         /// <summary>
         /// Constructor that initializes the enumerator.
         /// </summary>
         /// <param name="values"></param>
-        public LinkedArrayEnumerator(LinkedArray<T> values)
+        public LinkedArrayEnumerator(LinkedArray<TValue> values)
         {
             _values = values;
             _index = values.Lowest - 1;
         }
 
         /// <summary>
-        /// Current value of T under the cursor.
+        /// Current value of TValue under the cursor.
         /// </summary>
-        /// <returns>Value of T</returns>
-        public T Current =>
-            _index != int.MinValue
+        /// <returns>Value of TValue</returns>
+        public TValue Current => _index != int.MinValue
                 ? _values[_index]
-                : default(T);
+                : default(TValue);
 
         /// <summary>
         /// Interface Accessor of the Current property.
@@ -68,7 +67,7 @@ namespace GPS.Collections
         /// <returns>True if move was successful.</returns>
         public bool MoveNext()
         {
-            while(_index <= _values.Highest && !_values.IsSet(++_index)) ;
+            while (_index <= _values.Highest && !_values.IsSet(++_index)) ;
 
             if (_index == _values.Highest + 1) return false;
 
