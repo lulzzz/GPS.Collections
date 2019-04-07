@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>GPS.Collections</id>
-    <version>0.2.0</version>
+    <version>0.2.2</version>
     <title>Library of sparse collections and tools.</title>
     <authors>The Sharp Ninja</authors>
     <owners>Gateway Programming School, Inc.</owners>

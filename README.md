@@ -27,10 +27,9 @@ The `MatrixArray` is an auto-growing array of arrays that provide a contiguous i
 
 ### MatrixArray Usage
 
-##### Negative Indices
+#### Negative Indices
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray[-1] = "negative one";
@@ -40,10 +39,9 @@ Console.WriteLine($"Range: {matrixArray.Lowest} to {matrixArray.Highest}");
 // Range: -2 to -1
 ```
 
-##### Sparse Indices
+#### Sparse Indices
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray[-1000] = "negative one-thousand";
@@ -56,10 +54,9 @@ Console.WriteLine($"Count: {matrixArray.Count}");
 // Count: 2001
 ```
 
-##### Auto-growing
+#### Auto-growing
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray[-1] = "negative one";
@@ -77,10 +74,9 @@ Console.WriteLine($"Count: {matrixArray.Count}");
 // Count: 5
 ```
 
-##### Add Range
+#### Add Range
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray[0] = "zero";
@@ -89,10 +85,9 @@ Console.WriteLine($"Range: {matrixArray.Lowest} to {matrixArray.Highest}");
 // Range: 0 to 2
 ```
 
-##### Add Range At
+#### Add Range At
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray.AddRange(21, new [] { "twenty-one", "twenty-two" } );
@@ -100,10 +95,9 @@ Console.WriteLine($"Range: {matrixArray.Lowest} to {matrixArray.Highest}");
 // Range: 21 to 22
 ```
 
-##### IndexOf
+#### IndexOf
 
 ```csharp
-
 var matrixArray = new MatrixArray<string>();
 
 matrixArray[10] = "find me";

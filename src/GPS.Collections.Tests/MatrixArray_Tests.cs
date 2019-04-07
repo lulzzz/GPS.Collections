@@ -184,7 +184,7 @@ namespace GPS.Collections.Tests
 
             for (int i = 0; i < 20; ++i)
             {
-                lsw.Mark("Loading MatrixArray", () => matrixArray = new MatrixArray<int>(set));
+                lsw.Mark("Loading MatrixArray", () => matrixArray = new MatrixArray<int>(set, 0x400));
                 lsw.Mark("Loading List", () => list = new List<int>(set));
                 lsw.Mark("Loading Dictionary", () => { dictionary = new Dictionary<int, int>(); for(int j=0; j<set.Count; ++j) dictionary[set[j]] = set[j]; });
                 lsw.Mark("Loading SortedDictionary", () => { sortedDictionary = new SortedDictionary<int, int>(); for(int j=0; j<set.Count; ++j) sortedDictionary[set[j]] = set[j]; });
@@ -234,6 +234,7 @@ namespace GPS.Collections.Tests
                 GC.Collect();
             }
 
+
             lsw.Stop();
 
             foreach (var mark in lsw.ExecutionMarks)
@@ -254,7 +255,7 @@ namespace GPS.Collections.Tests
                 var formatter = new BinaryFormatter();
 
                 formatter.Serialize(stream, obj);
-                
+
                 return stream.Length;
             }
         }

@@ -1,15 +1,15 @@
 /*
     # GPS.Collections
-    
+
     ## MatrixArray.cs
 
-    Data structure that comprises an implementation of 
+    Data structure that comprises an implementation of
     ICollection<T> that is backed by the MatrixArray object.
 
     ## Copyright
 
     2019 - Gateway Programming School, Inc.
-    
+
     This notice must be retained for any use the code
     herein in whole or in part for any use.
  */
@@ -21,7 +21,7 @@ using System.Collections.Generic;
 namespace GPS.Collections
 {
     /// <summary>
-    /// Collection of generic values TValue that 
+    /// Collection of generic values TValue that
     /// uses an Array  of Array&lt;TValue&gt;
     /// instances holding the values of the collection.
     /// </summary>
@@ -32,24 +32,35 @@ namespace GPS.Collections
         /// <summary>
         /// Depth of each Array
         /// </summary>
-        private int _depth = 1024;
+        private int _depth = 0x400;
 
         /// <summary>
         /// Total width of the structure
         /// </summary>
-        private int _width = 32768;
+        private int _width = 0x800;
 
         /// <summary>
-        /// Max depth of each column of the matrix
+        /// Upper bounds of the size of the
+        /// MatrixArray depth.
+        /// </summary>
+        private int _maxDepth = 0x800;
+
+        /// <summary>
+        /// Maximum depth of the MatrixArray.
+        /// </summary>
+        public int MaxDepth => _maxDepth;
+
+        /// <summary>
+        /// Depth of each column of the matrix
         /// </summary>
         /// <value>int reflecting the depth</value>
-        /// <remarks>Must be between 2 and 1024.</remarks>
+        /// <remarks>Must be between 2 and 32768 (0x800).</remarks>
         public int ArrayDepth
         {
             get => _depth;
             set
             {
-                if (_depth > 1024) throw new IndexOutOfRangeException("The max depth of the Array is 1024.");
+                if (_depth > _maxDepth) throw new IndexOutOfRangeException($"The max depth of the Array is {_maxDepth}.");
                 if (_depth < 2) throw new IndexOutOfRangeException("The minimum depth of the Array is 2.");
 
                 _depth = value;
@@ -85,7 +96,7 @@ namespace GPS.Collections
 
         /// <summary>
         /// Default constructor that initializes the MatrixArray
-        /// with the default ArrayDepth of 1024.
+        /// with the default ArrayDepth of 1024 (0x400).
         /// </summary>
         public MatrixArray()
         {
@@ -122,8 +133,9 @@ namespace GPS.Collections
         /// values to initialize the collection starting at key = 0.
         /// </summary>
         /// <param name="collection">Values to initialize the collection.</param>
-        public MatrixArray(ICollection<TValue> collection) : this()
+        public MatrixArray(ICollection<TValue> collection, int arrayDepth = 0x400) : this()
         {
+            ArrayDepth = arrayDepth;
             AddRange(collection);
         }
 
@@ -186,12 +198,12 @@ namespace GPS.Collections
 
                 var array = index >= 0 ? _posData : _negData;
 
-                if (array[page] == null || !array[page][position].set)
+                if (array[page] != null && array[page][position].set)
                 {
-                    throw new IndexOutOfRangeException("No value is set at this location.");
+                    return array[page][position].data;
                 }
 
-                return array[page][position].data;
+                throw new IndexOutOfRangeException("No value is set at this location.");
             }
             set
             {
@@ -207,15 +219,17 @@ namespace GPS.Collections
 
                 if (array[page] == null) array[page] = new (bool set, TValue data)[_depth];
 
-                if (_isInitialized)
+                switch (_isInitialized)
                 {
-                    Lowest = Math.Min(index, Lowest);
-                    Highest = Math.Max(index, Highest);
-                }
-                else
-                {
-                    Lowest = Highest = index;
-                    _isInitialized = true;
+                    case true:
+                        Lowest = Math.Min(index, Lowest);
+                        Highest = Math.Max(index, Highest);
+                        break;
+
+                    case false:
+                        Lowest = Highest = index;
+                        _isInitialized = true;
+                        break;
                 }
 
                 array[page][position] = (set: true, data: value);
@@ -325,7 +339,7 @@ namespace GPS.Collections
         /// to a suitably sized target array.
         /// </summary>
         /// <param name="array">Target array</param>
-        /// <param name="arrayIndex">Index within the target 
+        /// <param name="arrayIndex">Index within the target
         /// array to place the contents of the MatrixArray&lt;TValue&gt;.
         /// </param>
         public void CopyTo(TValue[] array, int arrayIndex)
@@ -384,7 +398,7 @@ namespace GPS.Collections
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -394,7 +408,7 @@ namespace GPS.Collections
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="index"></param>
         public void RemoveAt(int index)
