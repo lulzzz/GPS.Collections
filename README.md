@@ -1,8 +1,10 @@
 # GPS.Collections
 
+[![Build status](https://ci.appveyor.com/api/projects/status/lgpu5pgn12nnl91x/branch/master?svg=true)](https://ci.appveyor.com/project/sharpninja/gps-collections/branch/master)
+
 Library of data structures for creating spacially oriented data.
 
-### Installation
+## Installation
 
 __GPS.Collections__ is available through Nuget.
 
