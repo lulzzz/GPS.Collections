@@ -28,7 +28,7 @@ test_script:
   - cmd: dotnet restore ./src/GPS.Collections.Tests/GPS.Collections.Tests.csproj --verbosity m
   # run the unit tests (requires changing into the test directory)
   - cmd: cd ./src/GPS.Collections.Tests
-  - cmd: dotnet xunit
+  - cmd: dotnet test
 on_finish :
   # any cleanup in here
 deploy: off
